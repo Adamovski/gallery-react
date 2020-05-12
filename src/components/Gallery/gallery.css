@@ -1,0 +1,10 @@
+.container {
+  max-width: 500px;
+  margin: auto;
+  border: white solid 3px;
+  background: white;
+}
+
+.active {
+  opacity: 0.5;
+}
