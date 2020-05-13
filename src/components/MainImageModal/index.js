@@ -10,7 +10,7 @@ const ModalContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 95);
   display: ${(props) => (props.isVisible ? "flex" : "none")};
   z-index: 10;
 `;
@@ -18,6 +18,7 @@ const ModalContainer = styled.div`
 const ImgModal = styled.div`
   position: relative;
   max-width: 760px;
+  padding:10px;
   background: white;
   display: flex;
 `;
@@ -41,7 +42,45 @@ const CurrentSlide = styled(Slide)`
   opacity: 1;
 `;
 
-const MainImageModal = ({ index, onClick, isVisible }) => {
+const Btn = styled.button`
+  background: none;
+  display: inline-block;
+  border: none;
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  font-size: 30px;
+  color: white;
+  opacity: 0.2;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+`;
+
+const PrevBtn = styled(Btn)`
+  left: 2%;
+`;
+
+const NextBtn = styled(Btn)`
+  right: 2%;
+`;
+
+const CloseBtn = styled(Btn)`
+  top: 20px;
+  left: 20px;
+`;
+
+const MainImageModal = ({
+  index,
+  onClick,
+  isVisible,
+  forwardClick,
+  backClick,
+  closeModule,
+}) => {
   const ImgArr = [
     ...ImageArray.map((item, i) => {
       if (i === index) {
@@ -61,11 +100,21 @@ const MainImageModal = ({ index, onClick, isVisible }) => {
     }),
   ];
   return (
-    <ModalContainer isVisible={isVisible}>
-      <i className="fas fa-arrow-left" id="prevBtn"></i>
-      <i className="fas fa-arrow-right" id="nextBtn"></i>
-      <ImgModal>
-        <i className="fas fa-times" id="closeBtn"></i>
+    <ModalContainer isVisible={isVisible} onClick={closeModule}>
+      <PrevBtn className="fas fa-arrow-left" onClick={backClick}></PrevBtn>
+      <NextBtn className="fas fa-arrow-right" onClick={forwardClick}></NextBtn>
+      <ImgModal
+        onClick={(e) => {
+          e.stopPropagation();
+          e.nativeEvent.stopImmediatePropagation();
+          return;
+        }}
+      >
+        <CloseBtn
+          className="fas fa-times"
+          id="closeBtn"
+          onClick={closeModule}
+        ></CloseBtn>
         {ImgArr.map((item) => {
           return item;
         })}

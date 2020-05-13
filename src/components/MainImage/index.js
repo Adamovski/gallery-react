@@ -7,12 +7,12 @@ const MainImg = styled.div`
 `;
 
 const Btn = styled.button`
+  margin: 0;
+  padding: 0;
   background: none;
   display: inline-block;
   border: none;
   position: absolute;
-  top: 50%;
-  z-index: 10;
   font-size: 30px;
   color: white;
   opacity: 0.2;
@@ -25,17 +25,27 @@ const Btn = styled.button`
 `;
 
 const PrevBtn = styled(Btn)`
+  height: 100%;
   left: 2%;
+  top: 0;
 `;
 
 const NextBtn = styled(Btn)`
+  height: 100%;
   right: 2%;
+  top: 0;
+`;
+
+const Expand = styled(Btn)`
+  bottom: 8px;
+  right: 8px;
 `;
 
 const MainImage = (props) => (
   <div className="main-img">
     <PrevBtn className="fas fa-arrow-left" onClick={props.backClick}></PrevBtn>
     <NextBtn className="fas fa-arrow-right" onClick={props.backClick}></NextBtn>
+    <Expand className="fas fa-expand" onClick={props.openModule}></Expand>
     <img src={props.mainSrc}></img>
   </div>
 );

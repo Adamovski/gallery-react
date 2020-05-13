@@ -8,15 +8,23 @@ import MainImageModal from "../MainImageModal";
 const Gallery = function () {
   const [index, setIndex] = useState(0);
   const mainSrc = ImageArray[index];
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const onThumbnailClick = (e) => {
-    setIndex(parseInt(e.target.getAttribute("data-index")));
-    setIsVisible(!isVisible);
+  const openModule = () => setIsVisible(!isVisible);
+
+  const closeModule = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    setIsVisible(false);
   };
 
-  const forwardClick = () => {
-    console.log(index);
+  const onThumbnailClick = (e) => {
+    e.stopPropagation();
+    setIndex(parseInt(e.target.getAttribute("data-index")));
+  };
+
+  const forwardClick = (e) => {
+    e.stopPropagation();
     if (index < ImageArray.length - 1) {
       setIndex(index + 1);
     } else {
@@ -24,7 +32,8 @@ const Gallery = function () {
     }
   };
 
-  const backClick = () => {
+  const backClick = (e) => {
+    e.stopPropagation();
     if (index > 0) {
       setIndex(index - 1);
     } else {
@@ -34,8 +43,15 @@ const Gallery = function () {
 
   return (
     <div className="container">
-      <MainImageModal index={index} isVisible={isVisible} />;
+      <MainImageModal
+        index={index}
+        isVisible={isVisible}
+        backClick={backClick}
+        forwardClick={forwardClick}
+        closeModule={closeModule}
+      />
       <MainImage
+        openModule={openModule}
         mainSrc={mainSrc}
         forwardClick={forwardClick}
         backClick={backClick}
