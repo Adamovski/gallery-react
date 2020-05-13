@@ -1,40 +1,50 @@
-import React from "react";
-import "./thumbnails.css";
+import React, { useState } from "react";
 import ImageArray from "../../constants/ImageArray";
-// import imgArr from "../constans/imgArr";
+import styled from "styled-components";
 
-const ThumbnailGallery = (props) => {
-  const ImgArr = [
-    ...ImageArray.map((item, index) => {
-      if (index === props.index) {
+const Imgs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  cursor: pointer;
+`;
+
+const ThumbnailGallery = ({ onThumbnailClick, index }) => {
+  let ImgArr = [
+    ...ImageArray.map((item, i) => {
+      if (i === index) {
         return (
-          <img
+          <Img
             src={item}
-            data-index={index}
-            onClick={props.onClick}
-            key={index}
+            data-index={i}
+            onClick={onThumbnailClick}
+            key={i}
             className="active"
-          ></img>
+          />
         );
       } else {
         return (
-          <img
+          <Img
             src={item}
-            data-index={index}
-            onClick={props.onClick}
-            key={index}
-          ></img>
+            data-index={i}
+            onClick={onThumbnailClick}
+            key={i}
+          />
         );
       }
     }),
   ];
 
   return (
-    <div className="imgs">
+    <Imgs>
       {ImgArr.map((item) => {
         return item;
       })}
-    </div>
+    </Imgs>
   );
 };
 
