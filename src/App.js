@@ -7,6 +7,7 @@ import Routes from "./components/Routes";
 export default function App() {
   return (
     <>
+      {/* <Navigation /> */}
       <Navigation />
       <Routes />
     </>

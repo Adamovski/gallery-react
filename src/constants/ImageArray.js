@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ImageArray = [
   "./assets/01.jpg",

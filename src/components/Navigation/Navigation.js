@@ -33,6 +33,12 @@ const Navigation = () => {
               <li>
                 <Link to="/">Home</Link>
               </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+              <li>
+                <Link to="/pixa">Pixa</Link>
+              </li>
             </ul>
           </div>
         </nav>

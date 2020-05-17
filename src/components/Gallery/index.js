@@ -1,9 +1,24 @@
 import React, { useState } from "react";
 import ThumbnailGallery from "../Thumbnails";
-import "./gallery.css";
 import MainImage from "../MainImage";
 import ImageArray from "../../constants/ImageArray";
 import MainImageModal from "../MainImageModal";
+import styled from "styled-components";
+
+const Container = styled.div`
+  padding-top:56px;
+  border: white solid 4px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const Wrapper = styled.div`
+  max-width: 500px;
+`;
 
 const Gallery = function () {
   const [index, setIndex] = useState(0);
@@ -42,7 +57,7 @@ const Gallery = function () {
   };
 
   return (
-    <div className="container">
+    <Container>
       <MainImageModal
         index={index}
         isVisible={isVisible}
@@ -50,14 +65,18 @@ const Gallery = function () {
         forwardClick={forwardClick}
         closeModule={closeModule}
       />
-      <MainImage
-        openModule={openModule}
-        mainSrc={mainSrc}
-        forwardClick={forwardClick}
-        backClick={backClick}
-      />
-      <ThumbnailGallery onThumbnailClick={onThumbnailClick} index={index} />
-    </div>
+      <Wrapper>
+        <MainImage
+          openModule={openModule}
+          mainSrc={mainSrc}
+          forwardClick={forwardClick}
+          backClick={backClick}
+        />
+      </Wrapper>
+      <Wrapper>
+        <ThumbnailGallery onThumbnailClick={onThumbnailClick} index={index} />
+      </Wrapper>
+    </Container>
   );
 };
 

@@ -1,9 +1,12 @@
 import React from "react";
-import "./mainImage.css";
 import styled from "styled-components";
 
-const MainImg = styled.div`
+const MainImgWrapper = styled.div`
   position: relative;
+`;
+
+const Img = styled.img`
+  width: 100%;
 `;
 
 const Btn = styled.button`
@@ -42,12 +45,12 @@ const Expand = styled(Btn)`
 `;
 
 const MainImage = (props) => (
-  <div className="main-img">
+  <MainImgWrapper>
     <PrevBtn className="fas fa-arrow-left" onClick={props.backClick}></PrevBtn>
     <NextBtn className="fas fa-arrow-right" onClick={props.backClick}></NextBtn>
     <Expand className="fas fa-expand" onClick={props.openModule}></Expand>
-    <img src={props.mainSrc}></img>
-  </div>
+    <Img src={props.mainSrc}></Img>
+  </MainImgWrapper>
 );
 
 export default MainImage;

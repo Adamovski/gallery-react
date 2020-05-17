@@ -11,14 +11,15 @@ const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 95);
-  display: ${(props) => (props.isVisible ? "flex" : "none")};
+  display: flex;
+  ${"" /* display: ${(props) => (props.isVisible ? "flex" : "none")}; */}
   z-index: 10;
 `;
 
 const ImgModal = styled.div`
   position: relative;
   max-width: 760px;
-  padding:10px;
+  padding: 10px;
   background: white;
   display: flex;
 `;
@@ -99,28 +100,34 @@ const MainImageModal = ({
       }
     }),
   ];
-  return (
-    <ModalContainer isVisible={isVisible} onClick={closeModule}>
-      <PrevBtn className="fas fa-arrow-left" onClick={backClick}></PrevBtn>
-      <NextBtn className="fas fa-arrow-right" onClick={forwardClick}></NextBtn>
-      <ImgModal
-        onClick={(e) => {
-          e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
-          return;
-        }}
-      >
-        <CloseBtn
-          className="fas fa-times"
-          id="closeBtn"
-          onClick={closeModule}
-        ></CloseBtn>
-        {ImgArr.map((item) => {
-          return item;
-        })}
-      </ImgModal>
-    </ModalContainer>
-  );
+
+  if (isVisible) {
+    return (
+      <ModalContainer onClick={closeModule}>
+        <PrevBtn className="fas fa-arrow-left" onClick={backClick}></PrevBtn>
+        <NextBtn
+          className="fas fa-arrow-right"
+          onClick={forwardClick}
+        ></NextBtn>
+        <ImgModal
+          onClick={(e) => {
+            e.stopPropagation();
+            e.nativeEvent.stopImmediatePropagation();
+            return;
+          }}
+        >
+          <CloseBtn
+            className="fas fa-times"
+            id="closeBtn"
+            onClick={closeModule}
+          ></CloseBtn>
+          {ImgArr.map((item) => {
+            return item;
+          })}
+        </ImgModal>
+      </ModalContainer>
+    );
+  } else return null;
 };
 
 export default MainImageModal;
