@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import ImageArray from "../../constants/ImageArray";
+import React from "react";
 import styled from "styled-components";
-import ThumbnailsMap from "../../helpers/thumbnails";
 
 const Imgs = styled.div`
   display: grid;
@@ -10,18 +8,36 @@ const Imgs = styled.div`
 `;
 
 const Img = styled.img`
-  width: 100%;
+  display: inline-block;
+  max-width: 122px;
   cursor: pointer;
 `;
 
-const ThumbnailGallery = ({ onThumbnailClick, index }) => {
+const ImgActive = styled(Img)`
+  opacity: 0.7;
+`;
+
+const Thumbnails = ({ onThumbnailClick, index, imageArray }) => {
   return (
-    <ThumbnailsMap
-      imageArray={ImageArray}
-      onThumbnailClick={onThumbnailClick}
-      index={index}
-    />
+    <Imgs>
+      {imageArray.map((item, i) => {
+        if (i === index) {
+          return (
+            <ImgActive
+              src={item}
+              data-index={i}
+              onClick={onThumbnailClick}
+              key={i}
+            />
+          );
+        } else {
+          return (
+            <Img src={item} data-index={i} onClick={onThumbnailClick} key={i} />
+          );
+        }
+      })}
+    </Imgs>
   );
 };
 
-export default ThumbnailGallery;
+export default Thumbnails;

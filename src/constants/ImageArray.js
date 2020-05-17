@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-
-const ImageArray = [
+const imageArray = [
   "./assets/01.jpg",
   "./assets/02.jpg",
   "./assets/03.jpg",
@@ -11,4 +9,4 @@ const ImageArray = [
   "./assets/08.jpg",
 ];
 
-export default ImageArray;
+export default imageArray;

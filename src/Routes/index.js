@@ -1,9 +1,8 @@
 import React from "react";
-
 import { Switch, Route } from "react-router-dom";
-import Gallery from "../Gallery";
-import ThumbnailSlides from "../ThumbnailSlides";
-import PixabayGallery from "../Pixabay_Api_Gallery/Pixabay";
+import PixabayGallery from "../components/Pixabay_Api_Gallery";
+import Gallery from "../components/Gallery";
+import ThumbnailSlides from "../components/ThumbnailSlides";
 
 {
   /* A <Switch> looks through its children <Route>s and
@@ -13,7 +12,7 @@ import PixabayGallery from "../Pixabay_Api_Gallery/Pixabay";
 const Routes = () => (
   <Switch>
     <Route path="/about">
-      <About />
+      <ThumbnailSlides />
     </Route>
     <Route path="/pixa">
       <PixabayGallery />
@@ -23,9 +22,5 @@ const Routes = () => (
     </Route>
   </Switch>
 );
-
-function About() {
-  return <ThumbnailSlides />;
-}
 
 export default Routes;

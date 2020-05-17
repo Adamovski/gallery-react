@@ -1,6 +1,6 @@
 import React from "react";
+import Thumbnails from "../../Thumbnails";
 import styled from "styled-components";
-import ThumbnailsMap from "../../../helpers/thumbnails";
 
 const Imgs = styled.div`
   display: grid;
@@ -22,7 +22,7 @@ const Container = styled.div`
 
 const ImageResults = ({ images, index, onThumbnailClick }) => {
   return (
-    <ThumbnailsMap
+    <Thumbnails
       imageArray={images}
       index={index}
       onThumbnailClick={onThumbnailClick}

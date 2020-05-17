@@ -1,6 +1,7 @@
 import React from "react";
-import ImageArray from "../../constants/ImageArray";
 import styled from "styled-components";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "./style.css";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -12,35 +13,30 @@ const ModalContainer = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 95);
   display: flex;
-  ${"" /* display: ${(props) => (props.isVisible ? "flex" : "none")}; */}
   z-index: 10;
 `;
 
 const ImgModal = styled.div`
   position: relative;
-  max-width: 760px;
-  padding: 10px;
-  background: white;
-  display: flex;
+  width: 100%;
+  height: 100%;
+  border: 10px solid black;
+  background: black;
 `;
 
-const Slide = styled.img`
-  display: none;
+const CurrentSlide = styled.img`
+  display: block;
   position: absolute;
-  width: 100%;
+  ${"" /* width: 100%; */}
+  ${"" /* height: 100%; */}
+  object-fit: cover;
+  height: 100%;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  transition: opacity 2s ease-out;
-  opacity: 1;
   margin: auto;
-`;
-
-const CurrentSlide = styled(Slide)`
-  display: inline-block;
-  position: initial;
-  opacity: 1;
+  ${"" /* border-radius: 20px; */}
 `;
 
 const Btn = styled.button`
@@ -78,29 +74,11 @@ const MainImageModal = ({
   index,
   onClick,
   isVisible,
-  forwardClick,
   backClick,
+  forwardClick,
   closeModule,
+  mainSrc,
 }) => {
-  const ImgArr = [
-    ...ImageArray.map((item, i) => {
-      if (i === index) {
-        return (
-          <CurrentSlide
-            src={item}
-            data-index={i}
-            onClick={onClick}
-            key={i}
-          ></CurrentSlide>
-        );
-      } else {
-        return (
-          <Slide src={item} data-index={i} onClick={onClick} key={i}></Slide>
-        );
-      }
-    }),
-  ];
-
   if (isVisible) {
     return (
       <ModalContainer onClick={closeModule}>
@@ -121,9 +99,21 @@ const MainImageModal = ({
             id="closeBtn"
             onClick={closeModule}
           ></CloseBtn>
-          {ImgArr.map((item) => {
-            return item;
-          })}
+          <TransitionGroup>
+            <CSSTransition
+              in={isVisible}
+              appear={true}
+              timeout={2000}
+              classNames="fade"
+              key={mainSrc}
+            >
+              <CurrentSlide
+                src={mainSrc}
+                onClick={onClick}
+                key={mainSrc}
+              ></CurrentSlide>
+            </CSSTransition>
+          </TransitionGroup>
         </ImgModal>
       </ModalContainer>
     );

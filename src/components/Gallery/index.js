@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import ThumbnailGallery from "../Thumbnails";
+import Thumbnails from "../Thumbnails";
 import MainImage from "../MainImage";
-import ImageArray from "../../constants/ImageArray";
+import imageArray from "../../constants/imageArray";
 import MainImageModal from "../MainImageModal";
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding-top:56px;
+  padding-top: 56px;
   border: white solid 4px;
   background: white;
   display: flex;
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 
 const Gallery = function () {
   const [index, setIndex] = useState(0);
-  const mainSrc = ImageArray[index];
+  const mainSrc = imageArray[index];
   const [isVisible, setIsVisible] = useState(false);
 
   const openModule = () => setIsVisible(!isVisible);
@@ -40,11 +40,12 @@ const Gallery = function () {
 
   const forwardClick = (e) => {
     e.stopPropagation();
-    if (index < ImageArray.length - 1) {
+    if (index < imageArray.length - 1) {
       setIndex(index + 1);
     } else {
       setIndex(0);
     }
+    console.log(index);
   };
 
   const backClick = (e) => {
@@ -52,8 +53,9 @@ const Gallery = function () {
     if (index > 0) {
       setIndex(index - 1);
     } else {
-      setIndex(ImageArray.length - 1);
+      setIndex(imageArray.length - 1);
     }
+    console.log(index);
   };
 
   return (
@@ -64,6 +66,7 @@ const Gallery = function () {
         backClick={backClick}
         forwardClick={forwardClick}
         closeModule={closeModule}
+        mainSrc={mainSrc}
       />
       <Wrapper>
         <MainImage
@@ -74,7 +77,11 @@ const Gallery = function () {
         />
       </Wrapper>
       <Wrapper>
-        <ThumbnailGallery onThumbnailClick={onThumbnailClick} index={index} />
+        <Thumbnails
+          onThumbnailClick={onThumbnailClick}
+          index={index}
+          imageArray={imageArray}
+        />
       </Wrapper>
     </Container>
   );
