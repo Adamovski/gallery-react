@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Search from "./Search/index";
 import ImageResults from "./imageResult/index";
 import MainImage from "../MainImage";
+import MainImageModal from "../MainImageModal";
 
 const Container = styled.div`
   border: white solid 4px;
@@ -27,6 +28,12 @@ const PixabayGallery = () => {
   const mainSrc = images.length > 0 ? images[index].largeImageURL : [];
 
   const openModule = () => setIsVisible(!isVisible);
+
+  const closeModule = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    setIsVisible(false);
+  };
 
   const onThumbnailClick = (e) => {
     e.stopPropagation();
@@ -61,6 +68,14 @@ const PixabayGallery = () => {
       />
       {images.length > 0 ? (
         <Container>
+          <MainImageModal
+            index={index}
+            isVisible={isVisible}
+            backClick={backClick}
+            forwardClick={forwardClick}
+            closeModule={closeModule}
+            mainSrc={mainSrc}
+          />
           <ImgsWrapper>
             <MainImage
               openModule={openModule}

@@ -11,10 +11,10 @@ import ThumbnailSlides from "../components/ThumbnailSlides";
 
 const Routes = () => (
   <Switch>
-    <Route path="/about">
+    <Route path="/slideshow">
       <ThumbnailSlides />
     </Route>
-    <Route path="/pixa">
+    <Route path="/pixabayApiGallery">
       <PixabayGallery />
     </Route>
     <Route path="/">

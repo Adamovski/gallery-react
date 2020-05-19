@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import "./style.css";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -20,15 +19,12 @@ const ImgModal = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  border: 10px solid black;
   background: black;
 `;
 
 const CurrentSlide = styled.img`
   display: block;
   position: absolute;
-  ${"" /* width: 100%; */}
-  ${"" /* height: 100%; */}
   object-fit: cover;
   height: 100%;
   top: 0;
@@ -36,7 +32,36 @@ const CurrentSlide = styled.img`
   bottom: 0;
   right: 0;
   margin: auto;
-  ${"" /* border-radius: 20px; */}
+  &.fade-appear {
+    opacity: 0;
+    z-index: 1;
+  }
+  &.fade-appear.fade-appear-active {
+    opacity: 1;
+    transition: opacity 2000ms linear;
+  }
+  &.fade-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+  &.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 2000ms linear;
+  }
+  &.fade-exit {
+    opacity: 1;
+  }
+  &.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 2000ms linear;
+  }
+  &.fade-exit-done {
+    opacity: 0;
+  }
+  @media (max-width: 960px) {
+    height: auto;
+    width: 100%;
+  }
 `;
 
 const Btn = styled.button`
@@ -56,7 +81,6 @@ const Btn = styled.button`
     transform: scale(1.1);
   }
 `;
-
 const PrevBtn = styled(Btn)`
   left: 2%;
 `;
@@ -70,9 +94,13 @@ const CloseBtn = styled(Btn)`
   left: 20px;
 `;
 
+//stop clicking on image body closing module
+const imageStopPropagation = (e) => {
+  e.stopPropagation();
+  e.nativeEvent.stopImmediatePropagation();
+};
+
 const MainImageModal = ({
-  index,
-  onClick,
   isVisible,
   backClick,
   forwardClick,
@@ -87,13 +115,7 @@ const MainImageModal = ({
           className="fas fa-arrow-right"
           onClick={forwardClick}
         ></NextBtn>
-        <ImgModal
-          onClick={(e) => {
-            e.stopPropagation();
-            e.nativeEvent.stopImmediatePropagation();
-            return;
-          }}
-        >
+        <ImgModal onClick={closeModule}>
           <CloseBtn
             className="fas fa-times"
             id="closeBtn"
@@ -109,8 +131,8 @@ const MainImageModal = ({
             >
               <CurrentSlide
                 src={mainSrc}
-                onClick={onClick}
                 key={mainSrc}
+                onClick={imageStopPropagation}
               ></CurrentSlide>
             </CSSTransition>
           </TransitionGroup>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Imgs = styled.div`
@@ -9,7 +9,7 @@ const Imgs = styled.div`
 
 const Img = styled.img`
   display: inline-block;
-  max-width: 122px;
+  width: 100%;
   cursor: pointer;
 `;
 
@@ -17,6 +17,7 @@ const ImgActive = styled(Img)`
   opacity: 0.7;
 `;
 
+//create galery of small images with active image dimmed
 const Thumbnails = ({ onThumbnailClick, index, imageArray }) => {
   return (
     <Imgs>

@@ -44,15 +44,12 @@ const Expand = styled(Btn)`
   right: 8px;
 `;
 
-const MainImage = (props) => (
+const MainImage = ({ forwardClick, backClick, openModule, mainSrc }) => (
   <MainImgWrapper>
-    <PrevBtn className="fas fa-arrow-left" onClick={props.backClick}></PrevBtn>
-    <NextBtn
-      className="fas fa-arrow-right"
-      onClick={props.forwardClick}
-    ></NextBtn>
-    <Expand className="fas fa-expand" onClick={props.openModule}></Expand>
-    <Img src={props.mainSrc}></Img>
+    <PrevBtn className="fas fa-arrow-left" onClick={backClick}></PrevBtn>
+    <NextBtn className="fas fa-arrow-right" onClick={forwardClick}></NextBtn>
+    <Expand className="fas fa-expand" onClick={openModule}></Expand>
+    <Img src={mainSrc}></Img>
   </MainImgWrapper>
 );
 

@@ -1,3 +1,5 @@
+//non dynamic array of images
+
 const imageArray = [
   "./assets/01.jpg",
   "./assets/02.jpg",

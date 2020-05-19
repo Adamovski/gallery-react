@@ -25,19 +25,23 @@ const Gallery = function () {
   const mainSrc = imageArray[index];
   const [isVisible, setIsVisible] = useState(false);
 
+  // open fullscreen image module
   const openModule = () => setIsVisible(!isVisible);
 
+  //close image module
   const closeModule = (e) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     setIsVisible(false);
   };
 
+  //change main image to clicked image
   const onThumbnailClick = (e) => {
     e.stopPropagation();
     setIndex(parseInt(e.target.getAttribute("data-index")));
   };
 
+  //display next image as main image
   const forwardClick = (e) => {
     e.stopPropagation();
     if (index < imageArray.length - 1) {
@@ -48,6 +52,7 @@ const Gallery = function () {
     console.log(index);
   };
 
+  //display previous image as clicked image
   const backClick = (e) => {
     e.stopPropagation();
     if (index > 0) {

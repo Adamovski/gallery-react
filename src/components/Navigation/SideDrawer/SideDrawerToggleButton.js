@@ -22,8 +22,8 @@ const ToggleButtonLine = styled.div`
   background: #143774;
 `;
 
-const sideDrawerToggleButton = (props) => (
-  <ToggleButton onClick={props.click}>
+const sideDrawerToggleButton = ({ click }) => (
+  <ToggleButton onClick={click}>
     <ToggleButtonLine></ToggleButtonLine>
     <ToggleButtonLine></ToggleButtonLine>
     <ToggleButtonLine></ToggleButtonLine>

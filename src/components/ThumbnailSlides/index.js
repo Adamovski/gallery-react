@@ -1,74 +1,153 @@
-import React, { useState } from "react";
-import ImageArray from "../../constants/ImageArray";
+import React, { useState, useEffect } from "react";
+import imageArray from "../../constants/imageArray";
 import styled from "styled-components";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Wrapper = styled.div`
   margin-top: 25vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 50px;
 `;
 
-const Container = styled.div`
-  max-width: 500px;
-  margin-left: 50px;
-  border: white solid 2px;
-  background: white;
+const SlidingThumbnails = styled.div`
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-conent: space-between;
 `;
 
 const Imgs = styled.div`
-  position: relative;
-  display: flex;
-  overflow-x: hidden;
-  gap: 5px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 `;
 
 const Img = styled.img`
-  display: inline-block;
+  padding: 5px;
+  width: 100%;
   flex: 1;
-  max-width: 124px;
-  cursor: pointer;
-  padding: 2px;
+  height: auto;
+  &.active {
+    opacity: 0.3;
+  }
+  &.fade-appear {
+    opacity: 0;
+    z-index: 1;
+  }
+  &.fade-appear.fade-appear-active {
+    opacity: 1;
+    transition: opacity 250ms linear;
+  }
+  &.fade-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+  &.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 250ms linear 250ms;
+  }
+  &.fade-exit {
+    opacity: 1;
+  }
+  &.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 250ms linear;
+  }
+  &.fade-exit-done {
+    opacity: 0;
+  }
 `;
 
-const slideFunction = (e) => {
-  e.target.style.transform = "translateX(-200px)";
-  console.log(e);
-};
+const Btn = styled.button`
+  margin: 0;
+  padding: 0;
+  background: none;
+  display: inline-block;
+  border: none;
+  font-size: 30px;
+  color: black;
+  opacity: 0.2;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+`;
 
-const ThumbnailSlides = ({ onThumbnailClick, index }) => {
-  let ImgArr = [];
+const PrevBtn = styled(Btn)`
+  height: 100%;
+`;
+
+const NextBtn = styled(Btn)`
+  height: 100%;
+`;
+
+const ThumbnailSlides = () => {
+  const [index, setIndex] = useState(0);
+
+  //display next image as main image
+  const forwardClick = (e) => {
+    e.stopPropagation();
+    if (index < imageArray.length - 1) {
+      setIndex(index + 1);
+    } else {
+      setIndex(0);
+    }
+    console.log(index);
+  };
+
+  //display previous image as clicked image
+  const backClick = (e) => {
+    e.stopPropagation();
+    if (index > 0) {
+      setIndex(index - 1);
+    } else {
+      setIndex(imageArray.length - 1);
+    }
+    console.log(index);
+    console.log(newImageArray);
+  };
+
+  //make ImageArray a loops
+
+  const newImageArray = [...imageArray];
+  newImageArray.push(...imageArray.slice(imageArray.lenghth - 3));
+
+//make image change by itself - useEffect can be used for setInterval functions
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (index < imageArray.length - 1) {
+        setIndex(index + 1);
+      } else {
+        setIndex(0);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Wrapper>
-      <Container>
+      {/* {interval} */}
+      <SlidingThumbnails>
+        <PrevBtn className="fas fa-arrow-left" onClick={backClick}></PrevBtn>
         <Imgs>
-          {ImageArray.map((item, i) => {
+          {newImageArray.map((item, i) => {
             if (i === index) {
               return (
-                <Img
-                  onClick={onThumbnailClick}
-                  src={item}
-                  data-index={i}
-                  key={i}
-                  className="active"
-                />
+                <Img src={item} data-index={i} key={i} className="active" />
               );
-            } else {
-              return (
-                <Img
-                  onClick={onThumbnailClick}
-                  src={item}
-                  data-index={i}
-                  key={i}
-                />
-              );
+            } else if (index < i && i < index + 4) {
+              return <Img src={item} data-index={i} key={i} />;
             }
           })}
         </Imgs>
-      </Container>
+        <NextBtn
+          className="fas fa-arrow-right"
+          onClick={forwardClick}
+        ></NextBtn>
+      </SlidingThumbnails>
     </Wrapper>
   );
 };
